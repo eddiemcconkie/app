@@ -1,26 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+
+import Nav from './components/Nav'
+import ProductInfo from './components/ProductInfo'
+import { CartContextProvider } from './contexts/CartContext'
+import useCart from './hooks/useCart'
+import styles from './styles/App.module.scss'
 
 function App() {
+  useCart()
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <CartContextProvider>
+      <main className={styles.layout}>
+        <Nav />
+        <ProductInfo id={1} />
+      </main>
+    </CartContextProvider>
+  )
 }
 
-export default App;
+export default App

@@ -1,0 +1,300 @@
+@use 'theme' as *;
+@use 'breakpoints';
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  place-items: center;
+  gap: 2rem;
+
+  @include breakpoints.medium {
+    width: min(100%, 28rem);
+    margin-inline: auto;
+  }
+
+  @include breakpoints.large {
+    width: auto;
+    grid-template-columns: 1fr 1fr;
+    // gap: 6rem;
+    gap: clamp(2rem, 7vw, 6rem);
+    margin-top: 3rem;
+    margin-inline: 1.5rem;
+    // padding-inline: 3rem;
+    padding-inline: clamp(0rem, 7vw - 2rem, 3rem);
+  }
+}
+
+.imageSection {
+  @include breakpoints.medium {
+    // maybe change to padding
+    margin: 1.5rem;
+  }
+
+  @include breakpoints.large {
+    margin: 0;
+  }
+}
+
+.mainImageContainer {
+  overflow: hidden;
+  display: flex;
+  position: relative;
+
+  // max-height: 30rem;
+
+  > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      transform: scale(1.2);
+      filter: opacity(0.7);
+    }
+  }
+
+  @include breakpoints.medium {
+    border-radius: 1rem;
+  }
+}
+
+%prevNextButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3rem;
+  height: 3rem;
+  border: none;
+  border-radius: 50%;
+  background-color: #fff;
+
+  &:hover {
+    filter: opacity(0.7);
+    transform: translateY(-50%) scale(1.05);
+  }
+}
+
+.prevButton {
+  @extend %prevNextButton;
+  left: 1rem;
+}
+
+.nextButton {
+  @extend %prevNextButton;
+  right: 1rem;
+}
+
+.thumbnailContainer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-block: 1.5rem;
+
+  > button {
+    border: none;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background-color: #fff;
+
+    > img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      // transition: all 0.3 ease-in-out;
+      transition: transform 0.1s ease-in-out, filter 0.1s ease-in-out;
+
+      // &:hover,
+      // &:focus-visible {
+      // transform: scale(1.05);
+      // filter: opacity(0.7);
+      // }
+    }
+
+    &:hover:not(.thumbnailSelected),
+    &:focus-visible:not(.thumbnailSelected) {
+      outline: none;
+      > img {
+        transform: scale(1.05);
+        filter: opacity(0.7);
+      }
+    }
+  }
+}
+
+.thumbnailSelected {
+  outline: solid 2px $orange;
+  > img {
+    transform: scale(1.05);
+    filter: opacity(0.3);
+  }
+}
+
+.infoSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-inline: 1.5rem;
+  margin-bottom: 10rem;
+
+  @include breakpoints.large {
+    margin-bottom: 0;
+    padding-inline: 0;
+  }
+}
+
+.companyTitle {
+  font-size: 0.8rem;
+  color: $orange;
+  text-transform: uppercase;
+  font-weight: 700;
+  @include breakpoints.large {
+    font-size: 1rem;
+  }
+}
+
+.heading {
+  font-size: 1.8rem;
+  font-weight: 700;
+
+  @include breakpoints.medium {
+    font-size: 2rem;
+  }
+
+  @include breakpoints.large {
+    // font-size: 2rem;
+    font-size: clamp(2rem, 3vw, 2.5rem);
+  }
+}
+
+.description {
+  color: $dark-grayish-blue;
+  line-height: 1.5;
+}
+
+.priceSection {
+  // display: grid;
+  // grid-template-columns: auto auto 1fr;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.discountedPrice {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.discount {
+  font-weight: 700;
+  color: $orange;
+  background-color: $pale-orange;
+  padding: 0.1rem 0.4rem;
+  border-radius: 5px;
+}
+
+.originalPrice {
+  font-weight: 700;
+  margin-left: auto;
+  text-decoration: line-through;
+  color: $grayish-blue;
+  @include breakpoints.large {
+    flex-basis: 100%;
+  }
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+
+  @include breakpoints.medium {
+    width: min(100%, 16rem);
+    margin-inline: auto;
+  }
+
+  @include breakpoints.large {
+    width: auto;
+    margin-inline: 0;
+    flex-direction: row;
+  }
+}
+
+.quantitySection {
+  display: grid;
+  // grid-template-columns: repeat(3, auto);
+  grid-template-columns: auto 1fr auto;
+  border-radius: 0.5rem;
+  background-color: $light-grayish-blue;
+  flex-grow: 0;
+  @include breakpoints.large {
+    max-width: fit-content;
+    flex-grow: 1;
+  }
+
+  > button,
+  > input {
+    border: none;
+    background-color: transparent;
+    font-weight: 700;
+  }
+
+  > button {
+    padding: 1rem;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+  }
+
+  > input {
+    // width: 100%;
+    height: 100%;
+    text-align: center;
+    @include breakpoints.large {
+      width: 3rem;
+    }
+  }
+
+  // hide number input scrollbar
+  > input[type='number']::-webkit-inner-spin-button,
+  > input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  > input[type='number'] {
+    -moz-appearance: textfield;
+  }
+}
+
+.addCart {
+  background-color: $orange;
+  color: white;
+  fill: white;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 1rem;
+  box-shadow: 0 30px 30px $pale-orange;
+  flex-grow: 1;
+  transition: all 0.1s ease-out;
+
+  &:hover:not(:disabled) {
+    // background-color: $pale-orange;
+    filter: opacity(0.7);
+  }
+
+  &:disabled {
+    background-color: $grayish-blue;
+    color: $light-grayish-blue;
+    fill: $light-grayish-blue;
+    // cursor: not-allowed;
+  }
+}
